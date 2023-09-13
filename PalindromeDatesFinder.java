@@ -7,18 +7,13 @@ public class PalindromeDatesFinder {
 
     public static void main(String[] args) {
 
-        List<Date> palindromeDates = printBonusDateBetween(2010, 2015);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        for (Date date : palindromeDates) {
-            System.out.println(sdf.format(date));
-        }
+        printBonusDateBetween(2010, 2015);
     }
 
-    public static List<Date> printBonusDateBetween(int startYear, int endYear) {
+    public static void printBonusDateBetween(int startYear, int endYear) {
         List<Date> palindromeDates = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdfNew = new SimpleDateFormat("yyyy-MM-dd");
 
         for (int year = startYear; year <= endYear; year++) {
             for (int month = 1; month <= 12; month++) {
@@ -26,18 +21,20 @@ public class PalindromeDatesFinder {
                     try {
                         String dateStr = String.format("%04d%02d%02d", year, month, day);
                         Date date = sdf.parse(dateStr);
-                        
+
                         if (isPalindrome(dateStr)) {
                             palindromeDates.add(date);
                         }
                     } catch (Exception e) {
-                        // Invalid date format, ignore and continue
+                        // Invalid date format - ignore and continue
                     }
                 }
             }
         }
 
-        return palindromeDates;
+        for (Date date : palindromeDates) {
+            System.out.println(sdfNew.format(date));
+        }
     }
 
     public static boolean isPalindrome(String str) {
@@ -51,8 +48,6 @@ public class PalindromeDatesFinder {
             left++;
             right--;
         }
-
         return true;
     }
 }
-
